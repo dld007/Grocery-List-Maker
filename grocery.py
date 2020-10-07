@@ -2,6 +2,7 @@ from requests import get
 from requests.exceptions import RequestException
 from contextlib import closing
 from bs4 import BeautifulSoup
+import json
 
 def s_get(url):
     # Attempts to get content from url by making an HTTP GET request.
@@ -11,7 +12,7 @@ def s_get(url):
     try:
         with closing(get(url, stream=True)) as resp:
             if is_good_response(resp):
-                return resp.content
+                return resp.text
             else:
                 return None
 
@@ -36,10 +37,11 @@ def get_ingredients():
     response = s_get(url)
 
     if response is not None:
-        html = BeautifulSoup(response, 'html.parser')
-        site_json = json.loads(html.text)
-        ingr = set()
-        for item in site_json['recipeIngredient']:
-            print(item)
+        soup = BeautifulSoup(response, 'html.parser')
+        data = soup.find('script', type='application/ld+json');
+        oJson = json.loads(data.contents[0])
+        print(oJson['@graph'][7]["recipeIngredient"])
+
 
 get_ingredients()
+
