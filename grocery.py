@@ -81,7 +81,9 @@ def get_grocery_list():
                     newMeasurementAmt = existingMeasurementAmt + thisMeasurementAmt
                     if not newMeasurementAmt % 1 == 0:
                         newMeasurementAmt = fractions.Fraction(Decimal(newMeasurementAmt))
-                    grocery_list[ingrNameAct] = str(newMeasurementAmt) + " " + measurementType
+                        grocery_list[ingrNameAct] = str(newMeasurementAmt) + " " + measurementType
+                    else:
+                        grocery_list[ingrNameAct] = str(int(newMeasurementAmt)) + " " + measurementType
 
                 # Measurement types do not match but there is still a measurement type
                 elif len(measurementType) > 0:
@@ -94,7 +96,9 @@ def get_grocery_list():
                     newMeasurementAmt = existingMeasurementAmt + thisMeasurementAmt
                     if not newMeasurementAmt % 1 == 0:
                         newMeasurementAmt = fractions.Fraction(Decimal(newMeasurementAmt))
-                    grocery_list[ingrNameAct] = str(newMeasurementAmt)
+                        grocery_list[ingrNameAct] = str(newMeasurementAmt)
+                    else:
+                        grocery_list[ingrNameAct] = str(int(newMeasurementAmt))
 
                 else:
                     grocery_list[ingrNameAct] = ""
@@ -108,7 +112,7 @@ def get_grocery_list():
 
 def main():
     get_grocery_list()
- 
+    #get_ingredients('https://www.budgetbytes.com/black-bean-burgers/')
 
 def convert_to_float(frac_str):
     try:
@@ -125,3 +129,4 @@ def convert_to_float(frac_str):
 
 if __name__ == "__main__":
     main()
+
